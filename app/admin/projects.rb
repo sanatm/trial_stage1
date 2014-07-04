@@ -1,4 +1,5 @@
 ActiveAdmin.register Projects do
+  permit_params :posttitle, :posttopic, :description, :postkeywords, :deadline, :milestone
 
   
   # See permitted parameters documentation:
