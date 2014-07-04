@@ -1,37 +1,46 @@
-<h1>Listing projects</h1>
-
-<table>
+<%- model_class = Projects -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => Projects %></h1>
+</div>
+<table class="table table-striped">
   <thead>
     <tr>
-      <th>Posttitle</th>
-      <th>Posttopic</th>
-      <th>Description</th>
-      <th>User</th>
-      <th>Postkeywords</th>
-      <th>Deadline</th>
-      <th>Milestone</th>
-      <th colspan="3"></th>
+      <th>ID</th>
+      <th><%= model_class.human_attribute_name(:posttitle) %></th>
+      <th><%= model_class.human_attribute_name(:posttopic) %></th>
+      <th><%= model_class.human_attribute_name(:description) %></th>
+      <th><%= model_class.human_attribute_name(:postkeywords) %></th>
+      <th><%= model_class.human_attribute_name(:deadline) %></th>
+      <th><%= model_class.human_attribute_name(:milestone) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
-
   <tbody>
-    <% @projects.each do |project| %>
+    <% @projects.each do |projects| %>
       <tr>
-        <td><%= project.posttitle %></td>
-        <td><%= project.posttopic %></td>
-        <td><%= project.description %></td>
-        <td><%= project.user %></td>
-        <td><%= project.postkeywords %></td>
-        <td><%= project.deadline %></td>
-        <td><%= project.milestone %></td>
-        <td><%= link_to 'Show', project %></td>
-        <td><%= link_to 'Edit', edit_project_path(project) %></td>
-        <td><%= link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= projects.id %></td>
+        <td><%= projects.posttitle %></td>
+        <td><%= projects.posttopic %></td>
+        <td><%= projects.description %></td>
+        <td><%= projects.postkeywords %></td>
+        <td><%= projects.deadline %></td>
+        <td><%= projects.milestone %></td>
+        <td><%=l projects.created_at, format: :long %></td>
+        <td>
+          <%= link_to projects_path(projects), :class => 'btn btn-xs', :title => "#{ t('.show', :default => t('helpers.links.show')) }" do %>
+            <%= glyph 'info-sign' %>
+            <%= glyph 'pencil' %>
+          <%- end -%>
+          <%= link_to projects_path(projects), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-xs', :title => "#{ t('.destroy', :default => t('helpers.links.destroy')) }" do %>
+            <%= glyph 'remove' %>
+          <%- end -%>
+        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<br>
-
-<%= link_to 'New Project', new_project_path %>
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_projects_path,
+            :class => 'btn btn-primary' %>
